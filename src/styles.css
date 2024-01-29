@@ -1,3 +1,48 @@
+main,
+header,
+input,
+button {
+  font-size: 18px;
+}
+main,
+header {
+  display: block;
+  background-color: rgb(162, 204, 218);
+}
+h2 {
+  font-size: 30px;
+}
 .input-wrap {
-    display: flex; justify-content: center; flex-wrap: nowrap; flex-direction: column; margin: 5px;  
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  margin: 5px;
+}
+
+.white-bg {
+  background-color: white;
+}
+
+.gray-bg {
+  background-color: gray;
+}
+
+.yellow-bg {
+  background-color: yellow;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.green-border {
+  border-radius: 5px;
+  border-color: green;
+  border-style: dashed;
+  padding: 5px;
+}
+
+.no-border {
+  border: none;
 }

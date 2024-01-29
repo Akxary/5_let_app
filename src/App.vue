@@ -9,42 +9,42 @@ export default {
       // rowLetters: ['йцукенгшщзхъ', 'фывапролджэ', 'ячсмитьбю'],
       rowLetters: [
         [
-          { let: 'й', stts: 'default' },
-          { let: 'ц', stts: 'default' },
-          { let: 'у', stts: 'default' },
-          { let: 'к', stts: 'default' },
-          { let: 'е', stts: 'default' },
-          { let: 'н', stts: 'default' },
-          { let: 'г', stts: 'default' },
-          { let: 'ш', stts: 'default' },
-          { let: 'щ', stts: 'default' },
-          { let: 'з', stts: 'default' },
-          { let: 'х', stts: 'default' },
-          { let: 'ъ', stts: 'default' }
+          { let: 'й', stts: 'default', dsbld: false },
+          { let: 'ц', stts: 'default', dsbld: false },
+          { let: 'у', stts: 'default', dsbld: false },
+          { let: 'к', stts: 'default', dsbld: false },
+          { let: 'е', stts: 'default', dsbld: false },
+          { let: 'н', stts: 'default', dsbld: false },
+          { let: 'г', stts: 'default', dsbld: false },
+          { let: 'ш', stts: 'default', dsbld: false },
+          { let: 'щ', stts: 'default', dsbld: false },
+          { let: 'з', stts: 'default', dsbld: false },
+          { let: 'х', stts: 'default', dsbld: false },
+          { let: 'ъ', stts: 'default', dsbld: false }
         ],
         [
-          { let: 'ф', stts: 'default' },
-          { let: 'ы', stts: 'default' },
-          { let: 'в', stts: 'default' },
-          { let: 'а', stts: 'default' },
-          { let: 'п', stts: 'default' },
-          { let: 'р', stts: 'default' },
-          { let: 'о', stts: 'default' },
-          { let: 'л', stts: 'default' },
-          { let: 'д', stts: 'default' },
-          { let: 'ж', stts: 'default' },
-          { let: 'э', stts: 'default' }
+          { let: 'ф', stts: 'default', dsbld: false },
+          { let: 'ы', stts: 'default', dsbld: false },
+          { let: 'в', stts: 'default', dsbld: false },
+          { let: 'а', stts: 'default', dsbld: false },
+          { let: 'п', stts: 'default', dsbld: false },
+          { let: 'р', stts: 'default', dsbld: false },
+          { let: 'о', stts: 'default', dsbld: false },
+          { let: 'л', stts: 'default', dsbld: false },
+          { let: 'д', stts: 'default', dsbld: false },
+          { let: 'ж', stts: 'default', dsbld: false },
+          { let: 'э', stts: 'default', dsbld: false }
         ],
         [
-          { let: 'я', stts: 'default' },
-          { let: 'ч', stts: 'default' },
-          { let: 'с', stts: 'default' },
-          { let: 'м', stts: 'default' },
-          { let: 'и', stts: 'default' },
-          { let: 'т', stts: 'default' },
-          { let: 'ь', stts: 'default' },
-          { let: 'б', stts: 'default' },
-          { let: 'ю', stts: 'default' }
+          { let: 'я', stts: 'default', dsbld: false },
+          { let: 'ч', stts: 'default', dsbld: false },
+          { let: 'с', stts: 'default', dsbld: false },
+          { let: 'м', stts: 'default', dsbld: false },
+          { let: 'и', stts: 'default', dsbld: false },
+          { let: 'т', stts: 'default', dsbld: false },
+          { let: 'ь', stts: 'default', dsbld: false },
+          { let: 'б', stts: 'default', dsbld: false },
+          { let: 'ю', stts: 'default', dsbld: false }
         ]
       ],
       inputCells: [
@@ -80,27 +80,40 @@ export default {
 
   methods: {
     filterByInput() {
-      console.log(['[^егвпди]', '[^регвпди]', '[^регвпди]', '[^оегвпди]', '[^оегвпди]'].join(''))
-      // const re = new RegExp(['[^егвпди]', '[^регвпди]', '[^регвпди]', '[^оегвпди]', '[^оегвпди]'].join(''))
-      const re = new RegExp(['[^е]', '[^е]', '[^е]', '[^е]', '[^е]'].join(''))
-      console.log('трава'.match(re))
       let filtArr = []
+      const re = new RegExp(
+        '^' +
+          [
+            '[^абвгдеипт]',
+            '[^абвгдеипрт]',
+            '[^абвгдеиопрт]',
+            '[^абвгдеиопрт]',
+            '[^абвгдеиопт]'
+          ].join('') +
+          '$'
+      )
+      // console.log(re.test('проух'))
+      // console.log('проух'.match(re))
       for (const itemC in this.inputCells) {
         const iCell = this.inputCells[itemC]
         if (iCell.val !== '') {
           filtArr.push('[' + iCell.val + ']')
         } else if (iCell.restr !== '') {
-          filtArr.push('[^' + iCell.restr + this.outLetters.join('') + ']')
+          filtArr.push('[^' + this.outLetters.concat(iCell.restr.split('')).sort().join('') + ']')
         } else {
           if (this.outLetters.length !== 0) {
-            filtArr.push('[^' + this.outLetters.join('') + ']')
+            filtArr.push('[^' + this.outLetters.sort().join('') + ']')
           } else {
             filtArr.push('[а-я]')
           }
         }
       }
       console.log(filtArr)
-      let retArr = this.wordsDict.filter((val) => val.match(filtArr.join('')))
+      const reF = new RegExp('^'+filtArr.join('')+'$')
+      // console.log(reF)
+      // console.log(this.wordsDict)
+      // console.log(new RegExp('^[а-я]{5}$').test(this.wordsDict[5]))
+      let retArr = this.wordsDict.filter((val) => reF.test(val))
       if (this.optLetters.length !== 0) {
         return retArr.filter((val) => {
           return this.optLetters.every((x) => val.split('').includes(x))
@@ -141,9 +154,22 @@ export default {
       })
     },
 
-    validateUpInput(inpVal) {
-      inpVal
-    }
+    validateUpInput(obj) {
+      obj.val = obj.val.toLowerCase()
+      let objValue = obj.val
+      if (objValue.length > 1) {
+        obj.val = objValue.slice(0, 1)
+        objValue = obj.val
+      }
+      const reF = new RegExp('[а-я]')
+      if (reF.test(objValue)) {
+        this.gotAllLetters
+      } else {
+        obj.val = ''
+      }
+    },
+
+    validateDownInput() {}
   },
 
   computed: {
@@ -168,60 +194,11 @@ export default {
 import { fileContent } from '../src/dictFunc'
 </script>
 
-<style>
-main,
-header,
-input,
-button {
-  font-size: 24px;
-}
-main,
-header {
-  display: inline;
-  background-color: rgb(162, 204, 218);
-}
-h2 {
-  font-size: 30px;
-}
-.input-wrap {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  margin: 5px;
-}
-
-.white-bg {
-  background-color: white;
-}
-
-.gray-bg {
-  background-color: gray;
-}
-
-.yellow-bg {
-  background-color: yellow;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.green-border {
-  border-radius: 5px;
-  border-color: green;
-  border-style: dashed;
-  padding: 5px;
-}
-
-.no-border {
-  border: none;
-}
-</style>
+<style src="./styles.css"></style>
 
 <template>
   <header>
-    <h2 style="display: flex; justify-content: center">5 букв</h2>
+    <h2>5 букв</h2>
     <br />
     <br />
   </header>
@@ -239,12 +216,14 @@ h2 {
           size="1"
           style="align-self: center; margin: 5px"
           oninput="this.value = this.value.toLowerCase()"
+          @input="validateUpInput(inC)"
         />
         <input
           v-model="inC.restr"
           class="text-center"
           size="5"
           oninput="this.value = this.value.toLowerCase()"
+          @input="validateDownInput"
         />
       </div>
     </div>
@@ -289,6 +268,7 @@ h2 {
               letter1.stts = this.selectedBtn
             }
           "
+          :disabled="letter.dsbld"
           style="margin: 5px"
           :class="stateColorMap[letter.stts]"
         >
