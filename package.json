@@ -11,6 +11,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "-": "^0.0.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "save-dev": "^0.0.1-security",
     "vue": "^3.3.11"
   },
   "devDependencies": {

@@ -1,5 +1,4 @@
 from './src/dictFunc.js' import readData
-
 <script>
 export default {
   data() {
@@ -50,8 +49,8 @@ export default {
       ],
       inputCells: [
         { val: '', restr: '' },
-        { val: 'а', restr: '' },
-        { val: '', restr: 'ц' },
+        { val: '', restr: '' },
+        { val: '', restr: '' },
         { val: '', restr: '' },
         { val: '', restr: '' }
       ],
@@ -63,11 +62,8 @@ export default {
       },
       selectedBtn: 'default',
       allLetters: 'йцукенгшщзхъфывапролджэячсмитьбю',
-      // firstRowList: this.rowLetters[0].split(),
       firstRowList: 'йцукенгшщзхъ'.split(''),
-      // secondRowList: this.rowLetters[1].split(),
       secondRowList: 'фывапролджэ'.split(''),
-      // thirdRowList: this.rowLetters[2].split(),
       thirdRowList: 'ячсмитьбю'.split(''),
       btnTypes: {
         Сброс: 'default',
@@ -84,6 +80,10 @@ export default {
 
   methods: {
     filterByInput() {
+      console.log(['[^егвпди]', '[^регвпди]', '[^регвпди]', '[^оегвпди]', '[^оегвпди]'].join(''))
+      // const re = new RegExp(['[^егвпди]', '[^регвпди]', '[^регвпди]', '[^оегвпди]', '[^оегвпди]'].join(''))
+      const re = new RegExp(['[^е]', '[^е]', '[^е]', '[^е]', '[^е]'].join(''))
+      console.log('трава'.match(re))
       let filtArr = []
       for (const itemC in this.inputCells) {
         const iCell = this.inputCells[itemC]
@@ -99,12 +99,8 @@ export default {
           }
         }
       }
-      // console.log(this.gotAllLetters)
-      // console.log(this.outLetters)
-      // console.log(this.optLetters)
-      // console.log(filtArr)
-      let retArr =this.wordsDict
-        .filter((val) => val.match(filtArr.join('')))
+      console.log(filtArr)
+      let retArr = this.wordsDict.filter((val) => val.match(filtArr.join('')))
       if (this.optLetters.length !== 0) {
         return retArr.filter((val) => {
           return this.optLetters.every((x) => val.split('').includes(x))
@@ -123,6 +119,30 @@ export default {
         }
       }
       return retArr
+    },
+
+    changeSelBtnType(key) {
+      Object.keys(this.btnClasses).forEach((k) => {
+        this.btnClasses[k] = 'no-border'
+      })
+      this.btnClasses[key] = 'green-border'
+    },
+
+    toDefaultValues() {
+      this.selectedBtn = 'default'
+      this.inputCells.forEach((val) => {
+        ;(val.val = ''), (val.restr = '')
+      })
+      this.changeSelBtnType('Сброс')
+      this.rowLetters.forEach((val1) => {
+        val1.forEach((val) => {
+          val.stts = 'default'
+        })
+      })
+    },
+
+    validateUpInput(inpVal) {
+      inpVal
     }
   },
 
@@ -151,10 +171,17 @@ import { fileContent } from '../src/dictFunc'
 <style>
 main,
 header,
-h2,
 input,
 button {
   font-size: 24px;
+}
+main,
+header {
+  display: inline;
+  background-color: rgb(162, 204, 218);
+}
+h2 {
+  font-size: 30px;
 }
 .input-wrap {
   display: flex;
@@ -195,6 +222,8 @@ button {
 <template>
   <header>
     <h2 style="display: flex; justify-content: center">5 букв</h2>
+    <br />
+    <br />
   </header>
 
   <main>
@@ -205,14 +234,18 @@ button {
       </div>
       <div v-for="(inC, idx) in inputCells" :key="idx" class="input-wrap">
         <input
-          :v-model="inC"
+          v-model="inC.val"
           class="text-center"
-          :value="inC.val"
           size="1"
           style="align-self: center; margin: 5px"
-          :on-change="console.log(this.inputCells)"
+          oninput="this.value = this.value.toLowerCase()"
         />
-        <input class="text-center" :value="inC.restr" size="5" />
+        <input
+          v-model="inC.restr"
+          class="text-center"
+          size="5"
+          oninput="this.value = this.value.toLowerCase()"
+        />
       </div>
     </div>
     <br />
@@ -229,10 +262,7 @@ button {
           @click="
             () => {
               selectedBtn = value
-              Object.keys(this.btnClasses).forEach((k, i) => {
-                this.btnClasses[k] = 'no-border'
-              })
-              btnClasses[key] = 'green-border'
+              changeSelBtnType(key)
             }
           "
         >
@@ -242,7 +272,7 @@ button {
     </div>
     <br />
     <div style="display: flex; justify-content: center">
-      <button>Сбросить всё</button>
+      <button @click="toDefaultValues">Сбросить всё</button>
     </div>
     <br />
     <br />
