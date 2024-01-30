@@ -55,10 +55,46 @@ export default {
         { val: '', restr: '' }
       ],
       stateColorMap: {
+        // static data
         default: null,
         in: 'yellow-bg',
         opt: 'white-bg',
         out: 'gray-bg'
+      },
+      letterPosMap: {
+        // static data
+        й: [0, 0],
+        ц: [0, 1],
+        у: [0, 2],
+        к: [0, 3],
+        е: [0, 4],
+        н: [0, 5],
+        г: [0, 6],
+        ш: [0, 7],
+        щ: [0, 8],
+        з: [0, 9],
+        х: [0, 10],
+        ъ: [0, 11],
+        ф: [1, 0],
+        ы: [1, 1],
+        в: [1, 2],
+        а: [1, 3],
+        п: [1, 4],
+        р: [1, 5],
+        о: [1, 6],
+        л: [1, 7],
+        д: [1, 8],
+        ж: [1, 9],
+        э: [1, 10],
+        я: [2, 0],
+        ч: [2, 1],
+        с: [2, 2],
+        м: [2, 3],
+        и: [2, 4],
+        т: [2, 5],
+        ь: [2, 6],
+        б: [2, 7],
+        ю: [2, 8]
       },
       selectedBtn: 'default',
       allLetters: 'йцукенгшщзхъфывапролджэячсмитьбю',
@@ -81,19 +117,6 @@ export default {
   methods: {
     filterByInput() {
       let filtArr = []
-      const re = new RegExp(
-        '^' +
-          [
-            '[^абвгдеипт]',
-            '[^абвгдеипрт]',
-            '[^абвгдеиопрт]',
-            '[^абвгдеиопрт]',
-            '[^абвгдеиопт]'
-          ].join('') +
-          '$'
-      )
-      // console.log(re.test('проух'))
-      // console.log('проух'.match(re))
       for (const itemC in this.inputCells) {
         const iCell = this.inputCells[itemC]
         if (iCell.val !== '') {
@@ -109,10 +132,7 @@ export default {
         }
       }
       console.log(filtArr)
-      const reF = new RegExp('^'+filtArr.join('')+'$')
-      // console.log(reF)
-      // console.log(this.wordsDict)
-      // console.log(new RegExp('^[а-я]{5}$').test(this.wordsDict[5]))
+      const reF = new RegExp('^' + filtArr.join('') + '$')
       let retArr = this.wordsDict.filter((val) => reF.test(val))
       if (this.optLetters.length !== 0) {
         return retArr.filter((val) => {
@@ -150,12 +170,13 @@ export default {
       this.rowLetters.forEach((val1) => {
         val1.forEach((val) => {
           val.stts = 'default'
+          val.dsbld = false
         })
       })
     },
 
     validateUpInput(obj) {
-      obj.val = obj.val.toLowerCase()
+      obj.val = obj.val.trim().toLowerCase()
       let objValue = obj.val
       if (objValue.length > 1) {
         obj.val = objValue.slice(0, 1)
@@ -163,13 +184,43 @@ export default {
       }
       const reF = new RegExp('[а-я]')
       if (reF.test(objValue)) {
-        this.gotAllLetters
+        // this.UnblockAll()
+        this.blockBySelected() //todo: block selected - unblock unselected
       } else {
         obj.val = ''
       }
     },
 
-    validateDownInput() {}
+    validateDownInput(obj) {
+      obj.restr = obj.restr.trim().toLowerCase()
+      const objValue = obj.restr
+      const reF = new RegExp('[а-я]+}')
+      if (!reF.test(objValue)) {
+        obj.restr = ''
+      }
+    },
+    UnblockAll() {
+      this.rowLetters.forEach((val1) => {
+        val1.forEach((val) => {
+          val.dsbld = false
+          if (val.stts==='in') {
+            val.stts = 'default'
+          }
+        })
+      })
+    },
+
+    blockBySelected() {
+      for (const idx in this.inputCells) {
+        const objValue = this.inputCells[idx].val
+        if (objValue !== '') {
+          const idxAr = this.letterPosMap[objValue]
+          console.log(idxAr)
+          this.rowLetters[idxAr[0]][idxAr[1]].stts = 'in'
+          // this.rowLetters[idxAr[0]][idxAr[1]].dsbld = true
+        }
+      }
+    }
   },
 
   computed: {
@@ -266,6 +317,7 @@ import { fileContent } from '../src/dictFunc'
             () => {
               let letter1 = this.rowLetters[idx1][idx]
               letter1.stts = this.selectedBtn
+              this.blockBySelected()
             }
           "
           :disabled="letter.dsbld"
