@@ -184,17 +184,17 @@ export default {
       }
       const reF = new RegExp('[а-я]')
       if (reF.test(objValue)) {
-        // this.UnblockAll()
-        this.blockBySelected() //todo: block selected - unblock unselected
+        this.colorYellowBySelected() //todo: block selected - unblock unselected
       } else {
         obj.val = ''
       }
+      this.uncolorYellowCells()
     },
 
     validateDownInput(obj) {
       obj.restr = obj.restr.trim().toLowerCase()
       const objValue = obj.restr
-      const reF = new RegExp('[а-я]+}')
+      const reF = new RegExp('[а-я]+')
       if (!reF.test(objValue)) {
         obj.restr = ''
       }
@@ -203,21 +203,30 @@ export default {
       this.rowLetters.forEach((val1) => {
         val1.forEach((val) => {
           val.dsbld = false
-          if (val.stts==='in') {
+          if (val.stts === 'in') {
             val.stts = 'default'
           }
         })
       })
     },
 
-    blockBySelected() {
-      for (const idx in this.inputCells) {
-        const objValue = this.inputCells[idx].val
+    colorYellowBySelected() {
+      for (const objValue of this.getUpInput) {
         if (objValue !== '') {
           const idxAr = this.letterPosMap[objValue]
-          console.log(idxAr)
           this.rowLetters[idxAr[0]][idxAr[1]].stts = 'in'
-          // this.rowLetters[idxAr[0]][idxAr[1]].dsbld = true
+          this.rowLetters[idxAr[0]][idxAr[1]].dsbld = true
+        }
+      }
+    },
+
+    uncolorYellowCells() {
+      const yellowAr = this.getUpInput
+      for (const obj of this.getYellowCells) {
+        if (!yellowAr.includes(obj.let)) {
+          const idxAr = this.letterPosMap[obj.let]
+          this.rowLetters[idxAr[0]][idxAr[1]].stts = 'default'
+          this.rowLetters[idxAr[0]][idxAr[1]].dsbld = false
         }
       }
     }
@@ -239,6 +248,25 @@ export default {
     },
     optLetters() {
       return this.getArrByType('opt')
+    },
+    getUpInput() {
+      let resArr = []
+      for (const idx in this.inputCells) {
+        const objValue = this.inputCells[idx].val
+        if (objValue !== '') {
+          resArr.push(objValue)
+        }
+      }
+      return resArr
+    },
+    getYellowCells() {
+      let resArr = []
+      for (const obj of this.gotAllLetters) {
+        if (obj.stts === 'in') {
+          resArr.push(obj)
+        }
+      }
+      return resArr
     }
   }
 }
@@ -248,13 +276,8 @@ import { fileContent } from '../src/dictFunc'
 <style src="./styles.css"></style>
 
 <template>
-  <header>
-    <h2>5 букв</h2>
-    <br />
-    <br />
-  </header>
-
-  <main>
+  <main style="display:block; justify-content: center;">
+    <h2 class="text-center">5 букв</h2>
     <div style="display: flex; justify-content: center">
       <div class="input-wrap">
         <label>Ввод: </label>
@@ -274,11 +297,10 @@ import { fileContent } from '../src/dictFunc'
           class="text-center"
           size="5"
           oninput="this.value = this.value.toLowerCase()"
-          @input="validateDownInput"
+          @input="validateDownInput(inC)"
         />
       </div>
     </div>
-    <br />
     <br />
     <div style="display: flex; justify-content: space-around">
       <div
@@ -301,11 +323,6 @@ import { fileContent } from '../src/dictFunc'
       </div>
     </div>
     <br />
-    <div style="display: flex; justify-content: center">
-      <button @click="toDefaultValues">Сбросить всё</button>
-    </div>
-    <br />
-    <br />
     <div
       style="display: flex; justify-content: center"
       v-for="(rowLet, idx1) in rowLetters"
@@ -317,7 +334,7 @@ import { fileContent } from '../src/dictFunc'
             () => {
               let letter1 = this.rowLetters[idx1][idx]
               letter1.stts = this.selectedBtn
-              this.blockBySelected()
+              this.colorYellowBySelected()
             }
           "
           :disabled="letter.dsbld"
@@ -328,9 +345,7 @@ import { fileContent } from '../src/dictFunc'
         </button>
       </div>
       <br />
-      <br />
     </div>
-    <br />
     <br />
     <div style="display: flex; justify-content: center">
       <textarea
@@ -338,9 +353,13 @@ import { fileContent } from '../src/dictFunc'
         class="text-center"
         style="font-size: 28px"
         rows="5"
-        cols="100"
+        cols="10"
         :disabled="true"
       ></textarea>
+    </div>
+    <br/>
+    <div style="display: flex; justify-content: center">
+      <button @click="toDefaultValues">Сбросить всё</button>
     </div>
   </main>
 </template>
