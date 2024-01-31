@@ -9,6 +9,7 @@ header {
   /* display: block; */
   background-color: rgb(162, 204, 218);
   max-width:700px;
+  justify-content: center;
 }
 h2 {
   font-size: 30px;

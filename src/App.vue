@@ -323,6 +323,8 @@ import { fileContent } from '../src/dictFunc'
       </div>
     </div>
     <br />
+    <div style="display: flex; justify-content: space-evenly;">
+    <div style="display: block">
     <div
       style="display: flex; justify-content: center"
       v-for="(rowLet, idx1) in rowLetters"
@@ -346,20 +348,24 @@ import { fileContent } from '../src/dictFunc'
       </div>
       <br />
     </div>
-    <br />
+    <br/>
+    <div style="display: flex; justify-content: center">
+      <button @click="toDefaultValues">Сбросить всё</button>
+    </div>
+  </div>
+    <!-- <br /> -->
+    <div display="block">
     <div style="display: flex; justify-content: center">
       <textarea
         v-model="filteredWordsOutput"
         class="text-center"
         style="font-size: 28px"
         rows="5"
-        cols="10"
+        cols="7"
         :disabled="true"
       ></textarea>
     </div>
-    <br/>
-    <div style="display: flex; justify-content: center">
-      <button @click="toDefaultValues">Сбросить всё</button>
-    </div>
+  </div>
+  </div>
   </main>
 </template>
