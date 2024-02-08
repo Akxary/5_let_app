@@ -1,0 +1,50 @@
+main,
+header,
+input,
+button {
+  font-size: 18px;
+}
+main,
+header {
+  /* display: block; */
+  background-color: rgb(162, 204, 218);
+  max-width:700px;
+  justify-content: center;
+}
+h2 {
+  font-size: 30px;
+}
+.input-wrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  margin: 5px;
+}
+
+.white-bg {
+  background-color: rgb(16, 164, 205);
+}
+
+.gray-bg {
+  background-color: gray;
+}
+
+.yellow-bg {
+  background-color: rgba(202, 202, 13, 0.642);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.green-border {
+  border-radius: 5px;
+  border-color: green;
+  border-style: dashed;
+  padding: 5px;
+}
+
+.no-border {
+  border: none;
+}
