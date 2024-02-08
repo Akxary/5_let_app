@@ -1,16 +1,6 @@
 //       
 let app = new Vue({
     el: '#vue-app',
-    props: {
-        'wstr': {
-            type: String,
-            // default:'123'
-        }
-    },
-    setup(props){
-        console.log(props.wstr)
-        this.wordsDict = props.wstr.split(', ')
-    },
     data() {
       return {
         cnt: 0,
@@ -127,7 +117,7 @@ let app = new Vue({
         // console.log(this.wstr)
         this.$nextTick(function () {
             const insertedData = JSON.parse(document.getElementById('json_data').textContent);
-            console.log(insertedData)
+            // console.log(insertedData)
             this.wordsDict = insertedData.split(', ')
         })
     },
@@ -151,7 +141,7 @@ let app = new Vue({
             }
           }
         }
-        console.log(filtArr)
+        // console.log(filtArr)
         const reF = new RegExp('^' + filtArr.join('') + '$')
         let retArr = this.wordsDict.filter((val) => reF.test(val))
         if (this.optLetters.length !== 0) {
