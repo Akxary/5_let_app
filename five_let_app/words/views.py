@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpRequest, JsonResponse
 
 def words(request: HttpRequest) -> HttpResponse:
     # common_words = Words.objects.all().values()[:10]
-    common_words = Words.objects.values_list("word", flat=True)[:10]
+    common_words = ', '.join(Words.objects.values_list("word", flat=True))
     # print(common_words[0])
     template = loader.get_template("words.html")
     context = {"words": common_words}
