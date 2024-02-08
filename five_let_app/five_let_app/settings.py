@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-x9%qcgrd5g73+z_s*40rw+4f0g=qwg#eb8dxh7d%)$!e$c3qt#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] # 'nctup-processing.ru'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "words", "static")
