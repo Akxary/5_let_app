@@ -1,0 +1,30 @@
+services:
+  django:
+    container_name: django
+    hostname: django
+    image: django_custom_image
+    build:
+      context: ./five_let_app
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/app/staticfiles
+
+    command: ["/app/app.sh"]
+#    command: ["cd app","poetry run manage.py runserver"]
+  nginx:
+    container_name: nginx
+    hostname: nginx
+    image: nginx_custom_image
+    build:
+      context: ./nginx
+    volumes:
+      - static_volume:/staticfiles/
+    depends_on:
+      - django
+    links:
+      - django
+    ports:
+      - "80:80"
+      - "443:443"
+volumes:
+  static_volume:
