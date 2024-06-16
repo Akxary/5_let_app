@@ -1,97 +1,97 @@
 <!doctype html>
 <html>
-  {% load static %}
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link type="" rel="stylesheet" href="{% static 'words/css/styles.css' %}" />
-  </head>
-  <body style="margin-left: auto; margin-right: auto; background-color: rgb(162, 204, 218)">
-    {% comment %}
-    <h1>Приложение 5 букв</h1>
-    {% endcomment %} {{ words|json_script:"json_data" }}
-    <div id="vue-app" style="display: flex; justify-content: space-around">
-      <template>
-        <main style="display: block; justify-content: center" wstr="a, b, c">
-          {% verbatim %}
-          <h2 class="text-center">5 букв</h2>
-          <div style="display: flex; justify-content: center">
-            <div class="input-wrap">
-              <label style="margin: 5px">Ввод: </label>
-              <label style="margin: 5px">Ограничения: </label>
-            </div>
-            <div v-for="(inC, idx) in inputCells" :key="idx" class="input-wrap">
-              <input
-                v-model="inC.val"
-                class="text-center"
-                size="1"
-                style="align-self: center; margin: 5px"
-                oninput="this.value = this.value.toLowerCase()"
-                @input="validateUpInput(inC)"
-              />
-              <input
-                v-model="inC.restr"
-                class="text-center"
-                size="5"
-                oninput="this.value = this.value.toLowerCase()"
-                @input="validateDownInput(inC)"
-              />
-            </div>
+{% load static %}
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link type="text/css" rel="stylesheet" href="{% static 'words/css/styles.css' %}" />
+</head>
+<body style="margin-left: auto; margin-right: auto; background-color: rgb(162, 204, 218)">
+{{ words|json_script:"json_data" }}
+{% comment %}{% endcomment %}
+<h1>Приложение 5 букв</h1>
+<div id="vue-app" style="display: flex; justify-content: space-around">
+  <template>
+    <main style="display: block; justify-content: center" wstr="a, b, c">
+      {% verbatim %}
+        <h2 class="text-center">5 букв</h2>
+        <div style="display: flex; justify-content: center">
+          <div class="input-wrap">
+            <label style="margin: 5px">Ввод: </label>
+            <label style="margin: 5px">Ограничения: </label>
           </div>
-          <br />
-          <div style="display: flex; justify-content: space-around">
-            <div
-              v-for="(value, key) in btnTypes"
-              :key="key"
-              style="display: flex; padding: 10px; flex-direction: column"
-              :class="btnClasses[key]"
-            >
-              <button
-                :class="stateColorMap[value]"
-                @click="
+          <div v-for="(inC, idx) in inputCells" :key="idx" class="input-wrap">
+            <input
+              v-model="inC.val"
+              class="text-center"
+              size="1"
+              style="align-self: center; margin: 5px"
+              oninput="this.value = this.value.toLowerCase()"
+              @input="validateUpInput(inC)"
+            />
+            <input
+              v-model="inC.restr"
+              class="text-center"
+              size="5"
+              oninput="this.value = this.value.toLowerCase()"
+              @input="validateDownInput(inC)"
+            />
+          </div>
+        </div>
+        <br />
+        <div style="display: flex; justify-content: space-around">
+          <div
+            v-for="(value, key) in btnTypes"
+            :key="key"
+            style="display: flex; padding: 10px; flex-direction: column"
+            :class="btnClasses[key]"
+          >
+            <button
+              :class="stateColorMap[value]"
+              @click="
               () => {
                 selectedBtn = value
                 changeSelBtnType(key)
               }
             "
-              >
-                <span>{{ key }}</span>
-              </button>
-            </div>
+            >
+              <span>{{ key }}</span>
+            </button>
           </div>
-          <br />
-          <div style="display: flex; justify-content: space-evenly">
-            <div style="display: block">
-              <div
-                style="display: flex; justify-content: center"
-                v-for="(rowLet, idx1) in rowLetters"
-                :key="idx1"
-              >
-                <div v-for="(letter, idx) in rowLet" :key="idx">
-                  <button
-                    @click="
+        </div>
+        <br />
+        <div style="display: flex; justify-content: space-evenly">
+          <div style="display: block">
+            <div
+              style="display: flex; justify-content: center"
+              v-for="(rowLet, idx1) in rowLetters"
+              :key="idx1"
+            >
+              <div v-for="(letter, idx) in rowLet" :key="idx">
+                <button
+                  @click="
               () => {
                 let letter1 = rowLetters[idx1][idx]
                 letter1.stts = selectedBtn
                 colorYellowBySelected()
               }
             "
-                    :disabled="letter.dsbld"
-                    style="margin: 5px"
-                    :class="stateColorMap[letter.stts]"
-                  >
-                    {{ letter.let }}
-                  </button>
-                </div>
-                <br />
+                  :disabled="letter.dsbld"
+                  style="margin: 5px"
+                  :class="stateColorMap[letter.stts]"
+                >
+                  {{ letter.let }}
+                </button>
               </div>
               <br />
-              <div style="display: flex; justify-content: center">
-                <button @click="toDefaultValues">Сбросить всё</button>
-              </div>
             </div>
-            <!-- <br /> -->
-            <div display="block">
-              <div style="display: flex; justify-content: center">
+            <br />
+            <div style="display: flex; justify-content: center">
+              <button @click="toDefaultValues">Сбросить всё</button>
+            </div>
+          </div>
+          <!-- <br /> -->
+          <div display="block">
+            <div style="display: flex; justify-content: center">
                 <textarea
                   v-model="filteredWordsOutput"
                   class="text-center"
@@ -100,14 +100,15 @@
                   cols="7"
                   :disabled="true"
                 ></textarea>
-              </div>
             </div>
           </div>
+        </div>
         </main>
-      </template>
-    </div>
-    {% endverbatim %}
+        </template>
+        </div>
+      {% endverbatim %}
 
-    <script src="{%static 'words/js/app.js'%}"></script>
-  </body>
+
+<script src="{% static 'words/js/app.js' %}"></script>
+</body>
 </html>

@@ -3,9 +3,16 @@ from django.db import models
 
 # Create your models here.
 class Words(models.Model):
-    first_let = models.CharField(max_length=1)
-    word = models.CharField(max_length=5)
+    first_let = models.CharField(max_length=1, verbose_name="Первая буква слова")
+    word = models.CharField(max_length=5, verbose_name="Слово из 5 букв")
 
+    class Meta:
+        verbose_name = "Слова из 5 букв"
+        verbose_name_plural = verbose_name
+        ordering = ["first_let"]
+
+    def __str__(self):
+        return self.word
 
 # python manage.py shell -i ipython
 # import sys

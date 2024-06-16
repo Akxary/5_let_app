@@ -4,17 +4,21 @@ import mimetypes
 
 mimetypes.add_type("text/javascript", ".js", True)
 mimetypes.add_type("text/css", ".css", True)
+# mimetypes.add_type("text/html", ".html", True)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-x9%qcgrd5g73+z_s*40rw+4f0g=qwg#eb8dxh7d%)$!e$c3qt#"
-DEBUG = False
-ALLOWED_HOSTS = ['*'] # 'nctup-processing.ru'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "words", "static"),
-    os.path.join(BASE_DIR, "static"),
-]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+DEBUG = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ["localhost", "django", "http://localhost", "http://localhost:8000", "http://127.0.0.1:8000", "http://django", "http://django:8000", "http://django:8000"]
+ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS  # 'nctup-processing.ru'
+STATIC_ROOT = BASE_DIR / "staticfiles"  # comment this on dev
 STATIC_URL = "/static/"
+# STATICFILES_DIRS = [  #  uncomment this on dev
+#     os.path.join(BASE_DIR, "words", "static"),
+#     # os.path.join(BASE_DIR, "staticfiles"),
+# ]
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

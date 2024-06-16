@@ -16,7 +16,7 @@ def words(request: HttpRequest) -> HttpResponse:
 
 
 # безнадёжные попытки отправлять данные сторонним приложениям
-def word_list(request: HttpRequest) -> HttpRequest:
+def word_list(request: HttpRequest) -> HttpResponse:
     common_words = Words.objects.values_list("word", flat=True)  # .values()
     # print(common_words[:5])
     # common_words = [w["word"] for w in common_words]
