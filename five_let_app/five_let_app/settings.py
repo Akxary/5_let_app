@@ -11,13 +11,14 @@ SECRET_KEY = "django-insecure-x9%qcgrd5g73+z_s*40rw+4f0g=qwg#eb8dxh7d%)$!e$c3qt#
 DEBUG = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ["localhost", "django", "http://localhost", "http://localhost:8000", "http://127.0.0.1:8000", "http://django", "http://django:8000", "http://django:8000"]
-ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS  # 'nctup-processing.ru'
-STATIC_ROOT = BASE_DIR / "staticfiles"  # comment this on dev
+CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://localhost:8000", "http://127.0.0.1:8000", "http://django",
+                        "http://django:8000", "http://django:8000"]
+ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS + ["localhost", "django", "127.0.0.1"]  # 'nctup-processing.ru'
+STATIC_ROOT = BASE_DIR / "static"  # comment this on dev
 STATIC_URL = "/static/"
 # STATICFILES_DIRS = [  #  uncomment this on dev
 #     os.path.join(BASE_DIR, "words", "static"),
-#     # os.path.join(BASE_DIR, "staticfiles"),
+#     # os.path.join(BASE_DIR, "static"),
 # ]
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    # "django.contrib.static",
     "django.contrib.staticfiles",
     "words",
 ]
