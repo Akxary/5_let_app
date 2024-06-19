@@ -14,12 +14,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://localhost:8000", "http://127.0.0.1:8000", "http://django",
                         "http://django:8000", "http://django:8000"]
 ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS + ["localhost", "django", "127.0.0.1"]  # 'nctup-processing.ru'
-STATIC_ROOT = "/staticfiles"  # comment this on dev
-STATIC_URL = "/static/"
-# STATICFILES_DIRS = [  #  uncomment this on dev
-#     os.path.join(BASE_DIR, "words", "static"),
-#     # os.path.join(BASE_DIR, "static"),
-# ]
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -85,3 +79,10 @@ USE_I18N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+STATIC_ROOT = "/static/"  # comment this on dev
+STATIC_URL = "/static/"
+# STATICFILES_DIRS = [  #  uncomment this on dev
+#     # os.path.join(BASE_DIR, "words", "static"),
+#     os.path.join(BASE_DIR, "static"),
+# ]

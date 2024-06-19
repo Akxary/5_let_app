@@ -7,10 +7,12 @@ services:
       context: ./five_let_app
       dockerfile: Dockerfile
     volumes:
-      - static_volume:/staticfiles
+      - static_volume:/static
 
     expose:
       - 8000
+    ports:
+      - "8001:8000"
 
 #    command: ["ls","/app","/app/app.sh"]
     entrypoint: ["/bin/bash", "-c", "/app/app.sh"]
@@ -24,13 +26,12 @@ services:
     build:
       context: ./nginx
     volumes:
-      - static_volume:/nginx_staticfiles
+      - static_volume:/static
     depends_on:
       - django
-    links:
-      - django
+#    links:
+#      - django
     ports:
       - "1337:80"
-      - "443:443"
 volumes:
   static_volume:
