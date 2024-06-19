@@ -1,19 +1,18 @@
 <!doctype html>
-<html>
+<html lang="ru">
 {% load static %}
 <head>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   {% block css %}
-  <link type="text/css" rel="stylesheet" href="{% static "words/css/styles.css" %}" />
+  <link type="text/css" rel="stylesheet" href="{% static "words/css/styles.css" %}" /><title>5 букв</title>
   {% endblock %}
 </head>
 <body style="margin-left: auto; margin-right: auto; background-color: rgb(162, 204, 218)">
 {{ words|json_script:"json_data" }}
 {% comment %}{% endcomment %}
-<h1>Приложение 5 букв</h1>
 <div id="vue-app" style="display: flex; justify-content: space-around">
   <template>
-    <main style="display: block; justify-content: center" wstr="a, b, c">
+    <main style="display: block; justify-content: center;" wstr="a, b, c">
       {% verbatim %}
         <h2 class="text-center">5 букв</h2>
         <div style="display: flex; justify-content: center">

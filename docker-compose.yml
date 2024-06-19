@@ -14,9 +14,9 @@ services:
     ports:
       - "8001:8000"
 
-#    command: ["ls","/app","/app/app.sh"]
-    entrypoint: ["/bin/bash", "-c", "/app/app.sh"]
-#    command: ["/app/app.sh"]
+#    command: ["ls","/app","/app/old_app.sh"]
+#    entrypoint: ["/bin/bash", "-c", "/app/app.sh"]
+#    command: ["/app/old_app.sh"]
 #    command: ["cd app","poetry run manage.py runserver"]
 #    command: []
   nginx:
