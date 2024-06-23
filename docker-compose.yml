@@ -11,8 +11,8 @@ services:
 
     expose:
       - 8000
-    ports:
-      - "8001:8000"
+#    ports:
+#      - "8001:8000"
 
 #    command: ["ls","/app","/app/old_app.sh"]
 #    entrypoint: ["/bin/bash", "-c", "/app/app.sh"]
