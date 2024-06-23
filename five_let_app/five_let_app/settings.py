@@ -16,13 +16,16 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:1337",
     "http://193.108.113.22",
     "http://193.108.113.22:1337",
+    "http://www.5-bukv-custom-app.ru",
+    "http://www.5-bukv-custom-app.ru:1337",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "http://django",
     "http://django:8000",
     "http://django:8000"
 ]
-ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS + ["localhost", "django", "127.0.0.1", "193.108.113.22"]  # 'nctup-processing.ru'
+ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS + ["localhost", "django", "127.0.0.1", "193.108.113.22", "5-bukv-custom-app.ru",
+                                        "www.5-bukv-custom-app.ru"]  # 'nctup-processing.ru'
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
